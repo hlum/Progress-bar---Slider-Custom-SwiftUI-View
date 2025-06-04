@@ -47,27 +47,30 @@ public struct MusicSlider<KnobView: View>: View {
                     Capsule()
                         .foregroundStyle(sliderBackgroundColor)
                         .frame(height: heightOfSlider)
+                       
                     
                     Capsule()
                         .foregroundStyle(valueIndicatorColor)
                         .frame(width: CGFloat(self.value / totalValue) * geometry.size.width, height: heightOfSlider)
+                        
                     
                     knob()
                         .offset(x: CGFloat(self.value / totalValue) * geometry.size.width - 9)
-                        .gesture(
-                            DragGesture()
-                                .onChanged { gesture in
-                                    let newX = min(max(0, gesture.location.x), geometry.size.width)
-                                    let newValue = (newX / geometry.size.width) * totalValue
-                                    self.value = newValue
-                                    onChange?(value)
-                                }
-                                .onEnded { _  in
-                                    onEnded(value)
-                                }
-                        )
+                       
                 }
-                
+                .gesture(
+                    DragGesture()
+                        .onChanged { gesture in
+                            let newX = min(max(0, gesture.location.x), geometry.size.width)
+                            let newValue = (newX / geometry.size.width) * totalValue
+                            self.value = newValue
+                            onChange?(value)
+                        }
+                        .onEnded { _  in
+                            onEnded(value)
+                        }
+                )
+
             }
         }
         .frame(height: 24)
